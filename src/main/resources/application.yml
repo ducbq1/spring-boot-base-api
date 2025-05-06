@@ -1,0 +1,36 @@
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+server:
+  port: 8080
+
+
+logging:
+  # Mức độ log toàn bộ ứng dụng
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate: ERROR
+
+  # Ghi log vào file
+  file:
+    name: logs/application.log
+
+  # Cấu hình log vào console
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30
