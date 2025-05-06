@@ -3,8 +3,10 @@ package com.example.demo.employee;
 
 import com.example.demo.base.BaseController;
 import com.example.demo.dto.response.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,6 +20,8 @@ public class EmployeeController extends BaseController<EmployeeService> {
     }
 
     @GetMapping
+    @ResponseStatus
+    @Operation(summary = "Lấy danh sách ví dụ", description = "Lấy danh sách ví dụ từ server")
     public ApiResponse<List<Employee>> getAll() {
         return ApiResponse.success(service.getAllEmployees());
     }

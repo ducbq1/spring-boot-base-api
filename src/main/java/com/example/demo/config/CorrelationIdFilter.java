@@ -1,35 +1,44 @@
 package com.example.demo.config;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.MDC;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
 
-import java.io.IOException;
 import java.util.UUID;
 
 @Component
-public class CorrelationIdFilter extends OncePerRequestFilter {
+public class CorrelationIdFilter implements WebFilter {
+
+    private static final String CORRELATION_ID_HEADER = "X-Correlation-Id";
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
-        String correlationId = request.getHeader("X-Correlation-Id");
-        if (correlationId == null || correlationId.isEmpty()) {
-            correlationId = UUID.randomUUID().toString();
-        }
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        String correlationId = getOrCreateCorrelationId(exchange.getRequest());
 
-        MDC.put("correlationId", correlationId);
+        // Add Correlation ID to request for downstream use
+        ServerHttpRequest mutatedRequest = exchange.getRequest()
+                .mutate()
+                .header(CORRELATION_ID_HEADER, correlationId)
+                .build();
 
-        try {
-            response.setHeader("X-Correlation-Id", correlationId); // thêm header phản hồi
-            filterChain.doFilter(request, response);
-        } finally {
-            MDC.remove("correlationId");
-        }
+        // Add it to MDC for logging (optional)
+        MDC.put(CORRELATION_ID_HEADER, correlationId);
+
+        ServerWebExchange mutatedExchange = exchange.mutate().request(mutatedRequest).build();
+
+        return chain.filter(mutatedExchange)
+                .doFinally(signalType -> MDC.remove(CORRELATION_ID_HEADER));
+    }
+
+    private String getOrCreateCorrelationId(ServerHttpRequest request) {
+        HttpHeaders headers = request.getHeaders();
+        return headers.getFirst(CORRELATION_ID_HEADER) != null
+                ? headers.getFirst(CORRELATION_ID_HEADER)
+                : UUID.randomUUID().toString();
     }
 }

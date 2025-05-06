@@ -6,6 +6,7 @@ import com.example.demo.user.domain.User;
 import com.example.demo.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
@@ -31,8 +32,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User get(@PathVariable Long id) {
-        return userService.getUser(id);
+    public Mono<User> get(@PathVariable Long id) {
+        return Mono.just(userService.getUser(id));
     }
 
     @PostMapping
