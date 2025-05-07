@@ -19,8 +19,9 @@ logging:
   # Mức độ log toàn bộ ứng dụng
   level:
     root: INFO
-    org.springframework.web: DEBUG
+    org.springframework.web: INFO
     org.hibernate: ERROR
+    ch.qos.logback: OFF
 
   # Ghi log vào file
   file:

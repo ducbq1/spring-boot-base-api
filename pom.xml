@@ -4,14 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.example</groupId>
-    <artifactId>spring-jdbc-webflux</artifactId>
+    <groupId>vn.vietinbank</groupId>
+    <artifactId>teller-evolve</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>spring-jdbc-webflux</name>
-    <description>Spring Boot WebFlux with JdbcTemplate and H2</description>
+    <name>teller-evolve</name>
+    <description>Teller Evolve: Spring Boot JDBC with H2</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -34,10 +33,10 @@
             <version>5.4.1</version>
         </dependency>
 
-        <!-- WebFlux -->
+        <!-- Spring MVC -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
 
@@ -52,7 +51,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-            <version>3.4.5</version>
+            <version>${spring.boot.version}</version>
         </dependency>
 
         <dependency>
@@ -69,7 +68,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Lombok (Optional for simplicity) -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -77,24 +76,17 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>spring-jdbc-webflux</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <!-- Springdoc OpenAPI WebFlux Integration -->
+        <!-- Springdoc OpenAPI cho Spring MVC -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webflux-api</artifactId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
             <version>2.8.6</version>
         </dependency>
-        <!-- Swagger UI -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.8.6</version>
         </dependency>
-
     </dependencies>
 
     <build>
