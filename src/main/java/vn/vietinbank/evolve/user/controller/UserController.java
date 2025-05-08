@@ -1,7 +1,7 @@
 package vn.vietinbank.evolve.user.controller;
 
 
-import vn.vietinbank.evolve.dto.response.ApiResponse;
+import vn.vietinbank.evolve.common.ApiResponse;
 import vn.vietinbank.evolve.user.domain.User;
 import vn.vietinbank.evolve.user.service.UserService;
 import org.springframework.http.ResponseEntity;

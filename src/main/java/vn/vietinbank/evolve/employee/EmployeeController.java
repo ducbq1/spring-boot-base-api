@@ -2,11 +2,10 @@
 package vn.vietinbank.evolve.employee;
 
 import vn.vietinbank.evolve.base.BaseController;
-import vn.vietinbank.evolve.dto.response.ApiResponse;
+import vn.vietinbank.evolve.common.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;

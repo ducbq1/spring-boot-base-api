@@ -1,5 +1,23 @@
-
 spring:
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  output:
+    ansi:
+      enabled: ALWAYS
+  data:
+    redis:
+      sentinel:
+        master: 11
+        nodes: 11
+      password: 11
+      client-type: lettuce
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 50
+          min-idle: 1
+          max-wait: 10000
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -14,6 +32,11 @@ spring:
 server:
   port: 8080
 
+app:
+  redis:
+    teller-prefix: TELLER
+  config:
+    api-prefix: /api
 
 logging:
   # Mức độ log toàn bộ ứng dụng
