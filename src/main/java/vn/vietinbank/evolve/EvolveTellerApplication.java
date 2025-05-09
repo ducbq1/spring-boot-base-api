@@ -11,6 +11,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.env.Environment;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableAsync;
+import vn.vietinbank.evolve.common.AppProperties;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
@@ -30,8 +31,10 @@ import java.util.Map;
 public class EvolveTellerApplication implements CommandLineRunner {
 
     private final Environment environment;
-    public EvolveTellerApplication(Environment environment) {
+    private final AppProperties appProperties;
+    public EvolveTellerApplication(Environment environment, AppProperties appProperties) {
         this.environment = environment;
+        this.appProperties = appProperties;
     }
 
     public static void main(String[] args) {
@@ -72,7 +75,7 @@ public class EvolveTellerApplication implements CommandLineRunner {
         long free = committed - used;
 
         // 3. Swagger URLs
-        String baseUrl = String.format("%s://%s:%s%s", protocol, hostAddress, serverPort, contextPath);
+        String baseUrl = String.format("%s://%s:%s%s%s", protocol, hostAddress, serverPort, contextPath, appProperties.getApiPrefix());
         String swaggerUi = baseUrl + "swagger-ui/index.html";
         String swaggerApiDocs = baseUrl + "v3/api-docs";
         String swaggerResources = baseUrl + "swagger-resources";
